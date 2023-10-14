@@ -29,12 +29,16 @@ const handleSubmt= async(event)=>{
         return ;
     }
     try{
-        const {user}= await createAuthUserWithEmailAndPassword(email, password);
+        const response= await createAuthUserWithEmailAndPassword(email, password);
+console.log(response);
      
     }catch(error){
        if(error.code==='auth/email-already-in-use'){
         alert('Cannot create user, email already in use.');
-       }else{
+       }else if(error.code==='auth/weak-password'){
+       alert('Password should be at least 6 characters')
+       }
+        else{
         console.log("user creation encounteres  an error" ,error);
     }
 }
