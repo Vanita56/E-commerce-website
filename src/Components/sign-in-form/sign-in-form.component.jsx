@@ -1,7 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
-import { UserContext } from "../../contexts/user.context";
+
 
 import {
   signInAuthUserWithEmailAndPassword,
@@ -15,42 +15,26 @@ const defaultFormFields = {
   password: '',
 };
 
-const SignInForm =()=>{
-  const [formFields, setFormFields]=useState(defaultFormFields);
-  const { email, password} =formFields;
+const SignInForm = () => {
+const [formFields, setFormFields] = useState(defaultFormFields);
+const { email, password } = formFields;
 
-  const {setCurrentUser} =useContext(UserContext);
-
-  const resetFormFields= () =>{
-      setFormFields(defaultFormFields);
+const resetFormFields = () => {
+    setFormFields(defaultFormFields);
   };
-const signInWithGoogle =async()=>{
-const {user} = await signInWithGooglePopup();
-setCurrentUser(user);
-// await createUserDocumentFromAuth(user);
-}
+const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
+  }
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     await signInAuthUserWithEmailAndPassword(email, password);
-  //     resetFormFields();
-  //   } catch (error) {
-  //     console.log('user sign in failed', error);
-  //   }
-  // };
-
-  const handleSubmt= async(event)=>{
+const handleSubmt = async (event) => {
     event.preventDefault();
 
-    try{
-        const {user}= await signInAuthUserWithEmailAndPassword(email, password);
-     console.log(user);
-     resetFormFields();
-     setCurrentUser(user);
-    }catch(error){
-      switch(error.code){
+    try {
+      const { user } = await signInAuthUserWithEmailAndPassword(email, password);
+      console.log(user);
+      resetFormFields();
+    } catch (error) {
+      switch (error.code) {
         case 'auth/wrong-password':
           alert('incorrect password for email');
           break;
@@ -58,10 +42,10 @@ setCurrentUser(user);
           alert('Please type correct login-credentials');
           break;
         default:
-          console.log(error);    
+          console.log(error);
       }
-}
-};
+    }
+  };
 
 
 
